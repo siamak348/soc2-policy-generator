@@ -1,0 +1,16 @@
+company:
+  name: str
+  industry: str
+  hosting_model: [cloud, hybrid, onprem]
+  remote_policy: [remote-first, hybrid, office-based]
+  timezone: str
+
+retention:
+  years: int
+
+controls:
+  access_review_frequency: [quarterly, bi-annually, annually]
+  backup_frequency: [hourly, daily, weekly]
+  vendor_review_cadence: [quarterly, bi-annually, annually]
+  encryption_at_rest: [AES-256, AES-128]
+  encryption_in_transit: [TLS 1.2+, TLS 1.3]

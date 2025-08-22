@@ -1,0 +1,10 @@
+# Encryption Policy
+
+**Company:** {{ company.name }}
+**At Rest:** {{ controls.encryption_at_rest }}
+**In Transit:** {{ controls.encryption_in_transit }}
+**Last Reviewed:** {{ today }}
+
+## Requirements
+- Manage keys using cloud KMS where available.
+- TLS enforced for all external endpoints.

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SOC 2 Policy Generator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <style>
+      .pill { padding: 0.25rem 0.5rem; border-radius: 9999px; border: 1px solid #ddd; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+      .templates { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px; }
+      .card { border: 1px solid #e5e7eb; padding: 12px; border-radius: 10px; }
+      .muted { color: #6b7280; font-size: 0.9rem; }
+    </style>
+  </head>
+  <body>
+    <h1>SOC 2 Security Policy Generator</h1>
+    <p class="muted">Fill your company profile and select the policies to export as DOCX.</p>
+
+    <form action="/generate" method="post">
+      <h3>Company Profile</h3>
+      <div class="grid">
+        <label>Company Name
+          <input name="company_name" required placeholder="CanApply Inc.">
+        </label>
+        <label>Industry
+          <input name="industry" placeholder="SaaS / EdTech / Fintech">
+        </label>
+        <label>Hosting Model
+          <select name="hosting_model">
+            <option value="cloud">Cloud (AWS/Azure/GCP)</option>
+            <option value="hybrid">Hybrid</option>
+            <option value="onprem">On-Premises</option>
+          </select>
+        </label>
+        <label>Remote Policy
+          <select name="remote_policy">
+            <option value="remote-first">Remote-first</option>
+            <option value="hybrid">Hybrid</option>
+            <option value="office-based">Office-based</option>
+          </select>
+        </label>
+        <label>Primary Timezone
+          <input name="timezone" value="America/Toronto">
+        </label>
+        <label>Data Retention (years)
+          <input type="number" name="retention_years" value="7" min="1" max="15">
+        </label>
+      </div>
+
+      <h3>Controls</h3>
+      <div class="grid">
+        <label>Access Review Frequency
+          <select name="access_review_frequency">
+            <option>quarterly</option>
+            <option>bi-annually</option>
+            <option>annually</option>
+          </select>
+        </label>
+        <label>Backup Frequency
+          <select name="backup_frequency">
+            <option>daily</option>
+            <option>hourly</option>
+            <option>weekly</option>
+          </select>
+        </label>
+        <label>Vendor Review Cadence
+          <select name="vendor_review_cadence">
+            <option>annually</option>
+            <option>bi-annually</option>
+            <option>quarterly</option>
+          </select>
+        </label>
+        <label>Encryption at Rest
+          <select name="encryption_at_rest">
+            <option>AES-256</option>
+            <option>AES-128</option>
+          </select>
+        </label>
+        <label>Encryption in Transit
+          <select name="encryption_in_transit">
+            <option>TLS 1.2+</option>
+            <option>TLS 1.3</option>
+          </select>
+        </label>
+      </div>
+
+      <h3>Policies</h3>
+      <div class="templates">
+        {% for p in policies %}
+        <label class="card">
+          <input type="checkbox" name="selected" value="{{ p.file }}" checked>
+          <strong>{{ p.title }}</strong>
+          <div class="muted">{{ p.description }}</div>
+        </label>
+        {% endfor %}
+      </div>
+
+      <p>
+        <button type="submit">Generate DOCX (zip)</button>
+      </p>
+    </form>
+
+    <footer class="muted">MIT © {{ year }} | Built by Siamak</footer>
+  </body>
+</html>
